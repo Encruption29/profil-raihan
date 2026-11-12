@@ -1,0 +1,14 @@
+# Sistem
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Log & tools lokal
+*.log
+node_modules/
+.taste-skill/
+shots/
+.vercel
+
+# Hasil build (Vercel membangun sendiri)
+dist/

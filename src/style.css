@@ -1,0 +1,811 @@
+/* ============================================================
+   Web Profil — Raihan Andriyas Prama (Encruption)
+   Tailwind CSS v4 + design-token Notion.
+   Tema light/dark lewat [data-theme] pada <html> → toggle instan.
+   ============================================================ */
+
+@import "tailwindcss";
+
+/* Varian tema berbasis atribut (bukan prefers-color-scheme) agar
+   toggle manual selalu menang. Pakainya: dark:… dan light:… */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+/* Breakpoint kustom: nav berpindah jadi dropdown di bawah 821px */
+@theme {
+  --breakpoint-tab: 821px;
+}
+
+/* Token Notion → utilitas Tailwind (bg-canvas, text-ink, border-hairline, …).
+   Nilai mengacu ke var runtime → ganti tema = semua warna ikut seketika. */
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-ink: var(--ink);
+  --color-charcoal: var(--charcoal);
+  --color-slate: var(--slate);
+  --color-steel: var(--steel);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+  --color-link: var(--link);
+  --color-header: var(--header-bg);
+  --color-tint-sky: var(--tint-sky-bg);
+  --color-tint-sky-ink: var(--tint-sky-ink);
+  --color-tint-peach: var(--tint-peach-bg);
+  --color-tint-peach-ink: var(--tint-peach-ink);
+  --color-tint-mint: var(--tint-mint-bg);
+  --color-tint-mint-ink: var(--tint-mint-ink);
+  --color-tint-lavender: var(--tint-lavender-bg);
+  --color-tint-lavender-ink: var(--tint-lavender-ink);
+  --color-tint-yellow: var(--tint-yellow-bg);
+  --color-tint-yellow-ink: var(--tint-yellow-ink);
+  --color-tint-rose: var(--tint-rose-bg);
+  --color-tint-rose-ink: var(--tint-rose-ink);
+}
+
+/* ---------- 1. DESIGN TOKENS (Notion) ---------- */
+:root {
+  /* Permukaan (light) */
+  --canvas: #ffffff;
+  --surface: #f6f5f4;
+  --surface-soft: #fafaf9;
+  --hairline: #e5e3df;
+  --hairline-strong: #c8c4be;
+
+  /* Teks (light) */
+  --ink: #1a1a1a;
+  --charcoal: #37352f;
+  --slate: #5d5b54;
+  --steel: #787671;
+  --muted: #a4a097;
+
+  /* Aksi & tautan (light) */
+  --primary: #5645d4;
+  --primary-hover: #4534b3;
+  --on-primary: #ffffff;
+  --link: #0075de;
+  --focus: #5645d4;
+
+  /* Tint Notion (light) — bg + teksnya */
+  --tint-sky-bg: #dcecfa;      --tint-sky-ink: #005bab;
+  --tint-peach-bg: #ffe8d4;    --tint-peach-ink: #7c3d00;
+  --tint-mint-bg: #d9f3e1;     --tint-mint-ink: #146c2e;
+  --tint-lavender-bg: #e6e0f5; --tint-lavender-ink: #4534b3;
+  --tint-yellow-bg: #fef7d6;   --tint-yellow-ink: #7a5800;
+  --tint-rose-bg: #fde0ec;     --tint-rose-ink: #96315c;
+
+  /* Chip di dalam kartu tint */
+  --chip-bg: rgba(255, 255, 255, 0.72);
+
+  /* Header blur */
+  --header-bg: rgba(255, 255, 255, 0.82);
+
+  /* Wash latar hero (light) */
+  --wash-1: rgba(86, 69, 212, 0.1);
+  --wash-2: rgba(221, 91, 0, 0.09);
+  --wash-3: rgba(26, 174, 57, 0.08);
+  --dot: rgba(15, 15, 15, 0.07);
+
+  /* Wash per-section (light) — sapuan tint lembut di tiap section */
+  --wash-sky: rgba(0, 117, 222, 0.06);
+  --wash-mint: rgba(26, 174, 57, 0.06);
+  --wash-peach: rgba(221, 91, 0, 0.06);
+  --wash-lavender: rgba(86, 69, 212, 0.07);
+  --wash-rose: rgba(255, 100, 200, 0.055);
+
+  /* Blob aurora hero (light) */
+  --blob-1: rgba(86, 69, 212, 0.17);
+  --blob-2: rgba(0, 117, 222, 0.13);
+  --blob-3: rgba(255, 100, 200, 0.09);
+
+  /* Grid blueprint + kilau kartu projek (light) */
+  --grid-line: rgba(15, 15, 15, 0.05);
+  --card-glow: rgba(86, 69, 212, 0.13);
+
+  /* Bayangan berlapis: ambient + direct */
+  --shadow-soft: 0 1px 2px rgba(15, 15, 15, 0.04), 0 8px 24px rgba(15, 15, 15, 0.06);
+  --shadow-lift: 0 2px 4px rgba(15, 15, 15, 0.05), 0 12px 32px rgba(15, 15, 15, 0.1);
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --canvas: #191919;
+  --surface: #202020;
+  --surface-soft: #232323;
+  --hairline: #383631;
+  --hairline-strong: #4d4b45;
+
+  --ink: #f0efec;
+  --charcoal: #d6d4cd;
+  --slate: #b3b1a8;
+  --steel: #8f8d85;
+  --muted: #6c6a63;
+
+  --primary: #5645d4;
+  --primary-hover: #6a5ce4;
+  --on-primary: #ffffff;
+  --link: #7fc4f7;
+  --focus: #a49bef;
+
+  --tint-sky-bg: rgba(0, 117, 222, 0.16);      --tint-sky-ink: #9cccf5;
+  --tint-peach-bg: rgba(221, 91, 0, 0.16);     --tint-peach-ink: #eab183;
+  --tint-mint-bg: rgba(26, 174, 57, 0.15);     --tint-mint-ink: #a4dcab;
+  --tint-lavender-bg: rgba(86, 69, 212, 0.24); --tint-lavender-ink: #c8bff7;
+  --tint-yellow-bg: rgba(245, 215, 94, 0.13);  --tint-yellow-ink: #e5d78f;
+  --tint-rose-bg: rgba(255, 100, 200, 0.15);   --tint-rose-ink: #efa4d2;
+
+  --chip-bg: rgba(255, 255, 255, 0.07);
+  --header-bg: rgba(25, 25, 25, 0.82);
+
+  /* Wash latar hero (dark) */
+  --wash-1: rgba(106, 92, 228, 0.16);
+  --wash-2: rgba(221, 91, 0, 0.1);
+  --wash-3: rgba(26, 174, 57, 0.09);
+  --dot: rgba(255, 255, 255, 0.055);
+
+  /* Wash per-section (dark) */
+  --wash-sky: rgba(127, 196, 247, 0.06);
+  --wash-mint: rgba(164, 220, 171, 0.06);
+  --wash-peach: rgba(234, 177, 131, 0.06);
+  --wash-lavender: rgba(200, 191, 247, 0.07);
+  --wash-rose: rgba(239, 164, 210, 0.055);
+
+  /* Blob aurora hero (dark) */
+  --blob-1: rgba(106, 92, 228, 0.22);
+  --blob-2: rgba(0, 117, 222, 0.16);
+  --blob-3: rgba(255, 100, 200, 0.11);
+
+  /* Grid blueprint + kilau kartu projek (dark) */
+  --grid-line: rgba(255, 255, 255, 0.05);
+  --card-glow: rgba(200, 191, 247, 0.12);
+
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.32);
+  --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.45);
+
+  color-scheme: dark;
+}
+
+/* ---------- 2. BASE ---------- */
+@layer base {
+  html {
+    height: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Gulir halus hanya jika pengguna tidak meminta pengurangan gerak */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    min-height: 100%;
+    background: var(--canvas);
+    color: var(--charcoal);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--ink);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    overflow-wrap: break-word;
+  }
+
+  a {
+    color: var(--link);
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: var(--tint-lavender-bg);
+    color: var(--ink);
+  }
+
+  /* Fokus keyboard selalu terlihat (tidak pernah outline: none) */
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Semua animasi/transisi dimatikan jika pengguna memintanya */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* ---------- 3. COMPONENTS ---------- */
+@layer components {
+  /* Ikon svg garis — ukuran dasar; varian (size-4, .contact-card .icon) menimpa */
+  .icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  /* Tepi kiri-kanan konten selalu sejajar */
+  .wrap {
+    width: 100%;
+    max-width: 1040px;
+    margin-inline: auto;
+    padding-inline: max(clamp(20px, 5vw, 32px), env(safe-area-inset-left));
+  }
+
+  .skip-link {
+    position: absolute;
+    top: -48px;
+    left: 16px;
+    z-index: 100;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: var(--primary);
+    color: var(--on-primary);
+    font-weight: 500;
+    transition: top 0.2s ease;
+  }
+
+  .skip-link:focus-visible {
+    top: 12px;
+  }
+
+  .eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--steel);
+  }
+
+  /* Kepala section: eyebrow bernomor + garis ke kanan */
+  .section-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .section-eyebrow::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--hairline);
+    transition: background-color 0.25s ease;
+  }
+
+  /* Latar hero: wash pastel + titik halus + blob rose statis.
+     Blob animasi (before/after) menyusul di bawah. */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(var(--dot) 1px, transparent 1.4px),
+      radial-gradient(460px 380px at 46% 26%, var(--blob-3), transparent 72%),
+      radial-gradient(560px 420px at 88% 0%, var(--wash-1), transparent 70%),
+      radial-gradient(520px 420px at 2% 92%, var(--wash-2), transparent 70%),
+      radial-gradient(440px 380px at 62% 112%, var(--wash-3), transparent 70%);
+    background-size: 26px 26px, auto, auto, auto, auto;
+    background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  }
+
+  /* Dua blob aurora besar di belakang hero — blur statis,
+     hanya transform yang dianimasikan (sangat pelan, arah bergantian) */
+  .hero-bg::before,
+  .hero-bg::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(64px);
+  }
+
+  .hero-bg::before {
+    top: -140px;
+    right: -100px;
+    width: 440px;
+    height: 440px;
+    background: radial-gradient(circle at 32% 32%, var(--blob-1), transparent 70%);
+    animation: blob-drift-a 26s ease-in-out infinite alternate;
+  }
+
+  .hero-bg::after {
+    bottom: -160px;
+    left: -80px;
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle at 62% 38%, var(--blob-2), transparent 70%);
+    animation: blob-drift-b 34s ease-in-out infinite alternate;
+  }
+
+  /* Dekorasi foto: cincin putus-putus + titik pastel */
+  .hero-photo::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: -16px;
+    right: -20px;
+    width: 100%;
+    height: 100%;
+    border: 2px dashed var(--tint-lavender-ink);
+    border-radius: 50%;
+    opacity: 0.5;
+    transform: rotate(9deg);
+    transition: border-color 0.25s ease;
+  }
+
+  .hero-photo::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    left: -10px;
+    bottom: 8px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--tint-mint-bg);
+    border: 2px solid var(--tint-mint-ink);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+  }
+
+  /* Latar halaman berlapis (paling dasar): noise halus + grid blueprint.
+     Fixed di z −1 → tampil di balik semua section yang transparan. */
+  .page-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      url("/assets/noise.png"),
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 96px 96px, 56px 56px, 56px 56px;
+  }
+
+  /* Sapuan tint lembut per-section — di ATAS grid halaman (z −1),
+     di BAWAH konten (pseudo z −1 + section position: relative) */
+  .wash-sky,
+  .wash-lavender,
+  .wash-mint,
+  .wash-peach,
+  .wash-rose {
+    position: relative;
+  }
+
+  .wash-sky::before,
+  .wash-lavender::before,
+  .wash-mint::before,
+  .wash-peach::before,
+  .wash-rose::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .wash-sky::before {
+    background: radial-gradient(760px 460px at 8% 18%, var(--wash-sky), transparent 72%);
+  }
+
+  .wash-lavender::before {
+    background: radial-gradient(760px 460px at 92% 0%, var(--wash-lavender), transparent 72%);
+  }
+
+  .wash-mint::before {
+    background: radial-gradient(760px 460px at 88% 100%, var(--wash-mint), transparent 72%);
+  }
+
+  .wash-peach::before {
+    background: radial-gradient(760px 460px at 6% 100%, var(--wash-peach), transparent 72%);
+  }
+
+  .wash-rose::before {
+    background: radial-gradient(900px 420px at 50% 0%, var(--wash-rose), transparent 75%);
+  }
+
+  /* Timeline pendidikan: garis vertikal + titik warna per item */
+  .timeline {
+    position: relative;
+    display: grid;
+    gap: 20px;
+    padding-left: 34px;
+    list-style: none;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 9px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    border-radius: 999px;
+    background: linear-gradient(to bottom, var(--tint-lavender-ink), var(--tint-mint-ink));
+    opacity: 0.4;
+    transition: opacity 0.25s ease;
+  }
+
+  .timeline li {
+    position: relative;
+  }
+
+  .timeline li::before {
+    content: "";
+    position: absolute;
+    left: -31px;
+    top: 30px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--tint-lavender-bg);
+    border: 2px solid var(--tint-lavender-ink);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+  }
+
+  .timeline li:nth-child(2)::before {
+    background: var(--tint-mint-bg);
+    border-color: var(--tint-mint-ink);
+  }
+
+  /* Marquee chips: berjalan pelan, berhenti saat disorot/difokuskan.
+     Jarak antar-duplikat (padding-right) = jarak antar-chip → loop mulus. */
+  .marquee {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 42s linear infinite;
+  }
+
+  .marquee-list {
+    display: flex;
+    gap: 10px;
+    padding-right: 10px;
+  }
+
+  .marquee-list li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 30px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--chip-bg);
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+
+  /* Garis progres baca — scaleX digerakkan JS (terkait scroll) */
+  .scroll-progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 60;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--link));
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    pointer-events: none;
+  }
+
+  /* Tombol kembali ke atas — kemunculan diatur JS lewat .show */
+  .to-top {
+    position: fixed;
+    right: max(18px, env(safe-area-inset-right));
+    bottom: max(18px, env(safe-area-inset-bottom));
+    z-index: 55;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
+  }
+
+  /* Kilau lembut mengikuti kursor pada kartu projek
+     (posisi dikirim JS lewat --mx/--my; kartu butuh relative + overflow-hidden) */
+  .project-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      260px circle at var(--mx, 50%) var(--my, 50%),
+      var(--card-glow),
+      transparent 70%
+    );
+    transition: opacity 0.3s ease;
+  }
+
+  .project-card:hover::after,
+  .project-card:focus-visible::after {
+    opacity: 0.5;
+  }
+
+  /* Chips keahlian */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .chips li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 30px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--chip-bg);
+    font-size: 0.875rem;
+    font-weight: 500;
+    overflow-wrap: break-word;
+  }
+
+  .badge {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--tint-yellow-bg);
+    color: var(--tint-yellow-ink);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* Kartu ber-tint */
+  .tint-sky { background: var(--tint-sky-bg); color: var(--tint-sky-ink); }
+  .tint-peach { background: var(--tint-peach-bg); color: var(--tint-peach-ink); }
+  .tint-mint { background: var(--tint-mint-bg); color: var(--tint-mint-ink); }
+  .tint-yellow { background: var(--tint-yellow-bg); color: var(--tint-yellow-ink); }
+  .tint-lavender { background: var(--tint-lavender-bg); color: var(--tint-lavender-ink); }
+  .tint-rose { background: var(--tint-rose-bg); color: var(--tint-rose-ink); }
+
+  /* Ikon judul kartu keahlian */
+  .skill-ico {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: var(--chip-bg);
+    flex-shrink: 0;
+  }
+
+  .skill-ico svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  /* Mockup UI mini di kartu projek (dekoratif, aria-hidden) */
+  .project-mock {
+    display: block;
+    margin: 18px 0 6px;
+    padding: 10px 12px 12px;
+    background: var(--surface-soft);
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+  }
+
+  .mock-bar {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .mock-bar i {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--hairline-strong);
+  }
+
+  .mock-table {
+    display: grid;
+    gap: 6px;
+  }
+
+  .mock-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 9px;
+    background: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+  }
+
+  .mb {
+    display: block;
+    height: 7px;
+    border-radius: 4px;
+    background: var(--hairline);
+  }
+
+  .mb-a { width: 42%; }
+  .mb-t { width: 34%; }
+  .mb-s { width: 18%; }
+
+  .mock-pill {
+    display: block;
+    margin-left: auto;
+    width: 34px;
+    height: 13px;
+    border-radius: 999px;
+  }
+
+  .mock-pill-mint { background: var(--tint-mint-bg); }
+  .mock-pill-yellow { background: var(--tint-yellow-bg); }
+
+  .mock-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .mock-item {
+    display: grid;
+    gap: 6px;
+    padding: 8px;
+    background: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+  }
+
+  .mock-item .mb-s { width: 55%; }
+
+  .mock-img {
+    display: block;
+    height: 44px;
+    border-radius: 6px;
+    border: 1px solid var(--hairline);
+  }
+
+  /* Ikon kontak ber-tint */
+  .contact-card .icon {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    padding: 10px;
+    border-radius: 50%;
+    color: var(--tint-lavender-ink);
+    background: var(--tint-lavender-bg);
+  }
+
+  .ico-rose .icon {
+    color: var(--tint-rose-ink);
+    background: var(--tint-rose-bg);
+  }
+
+  .ico-sky .icon {
+    color: var(--tint-sky-ink);
+    background: var(--tint-sky-bg);
+  }
+
+  /* Footer ber-mark */
+  .footer-mark {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    background: var(--primary);
+    color: var(--on-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+}
+
+/* ---------- Keyframes ronde 2 (transform saja, hormat reduced-motion
+   lewat rule global di @layer base) ---------- */
+
+@keyframes blob-drift-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-44px, 30px, 0) scale(1.12);
+  }
+}
+
+@keyframes blob-drift-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.06);
+  }
+  to {
+    transform: translate3d(34px, -38px, 0) scale(0.94);
+  }
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- 4. STATE (digerakkan JS — di luar layer agar menang atas utilitas) ---------- */
+
+/* Garis bawah header muncul saat halaman digulir */
+.site-header.scrolled {
+  border-bottom-color: var(--hairline);
+}
+
+/* Menu mobile terbuka (pola disclosure) */
+.site-nav.open {
+  display: block;
+}
+
+/* Tautan nav aktif mengikuti section di tengah layar */
+.nav-list a[aria-current="location"] {
+  background: var(--tint-lavender-bg);
+  color: var(--tint-lavender-ink);
+}
+
+/* Tombol ke-atas muncul setelah halaman digulir jauh */
+.to-top.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s;
+}
+
+/* Reveal: hanya transform + opacity, aktif hanya jika JS jalan
+   dan pengguna tidak meminta pengurangan gerak */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  html.js [data-reveal].in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+    transition-delay: calc(var(--reveal-delay, 0) * 70ms);
+  }
+}
