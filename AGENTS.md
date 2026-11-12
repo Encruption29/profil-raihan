@@ -90,6 +90,17 @@ public/assets/    ← foto, favicon, CV, tekstur noise.png (disalin apa adanya)
 - Nama brand (`Encruption`, `Duck.sc`, `Casa Market`, `Casa Group`) pakai
   `translate="no"` dan tidak diubah penerjemahnya.
 
+## Deployment
+
+- Repo: https://github.com/Encruption29/profil-raihan (public, branch `main`).
+- Live: https://profil-raihan.vercel.app — **push ke `main` = deploy otomatis**
+  (Vercel membaca `vercel.json`: buildCommand `npm run build`, output `dist/`, header keamanan).
+- `og:url` & `og:image` di `index.html` memakai URL absolut domain live —
+  bila domain berubah, ubah keduanya.
+- CV: sumber di `cv-sumber/cv-raihan.html` → cetak ke `public/assets/cv/cv-raihan.pdf`
+  via Chrome headless (perintah ada di komentar file HTML). Isi CV mengikuti konten
+  situs — jangan mengarang data yang tidak ada di `index.html`.
+
 ## Verifikasi
 
 ```bash

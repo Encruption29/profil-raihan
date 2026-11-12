@@ -34,8 +34,9 @@ profil-raihan/
 │   │   ├── foto.png    ← foto profil (512×512, dioptimasi)
 │   │   ├── favicon.svg
 │   │   ├── noise.png   ← tekstur noise untuk latar (aset sendiri, alpha rendah)
-│   │   └── cv/cv-raihan.pdf  ← CV (masih placeholder!)
+│   │   └── cv/cv-raihan.pdf  ← CV (dibuat dari cv-sumber/, lihat bawah)
 │   └── js/theme.js     ← tema anti-kedip (sinkron di <head>, tidak dibundel)
+├── cv-sumber/            ← sumber CV (HTML) → dicetak ke PDF via Chrome headless
 ├── vercel.json         ← buildCommand + header keamanan (deploy Vercel)
 ├── AGENTS.md           ← panduan konvensi proyek (untuk AI coding agent)
 └── README.md
@@ -58,20 +59,32 @@ npm run build      # output: dist/
 npm run preview    # buka http://localhost:4173
 ```
 
-## 🚀 Deploy (nanti, setelah CV asli diganti)
+## 🌐 Live & deploy
 
-1. `git init`, commit, push ke repo GitHub baru (mis. `profil-raihan`)
-2. **Vercel**: import repo → deploy otomatis (`vercel.json` mengatur build & header)
-3. **GitHub Pages** (opsional): butuh build dulu → pakai GitHub Actions
-   (jalanin `npm run build`, publish folder `dist/`) — minta bantuan saya saat waktunya
+- **Situs live:** https://profil-raihan.vercel.app
+- **Repo:** https://github.com/Encruption29/profil-raihan (public, branch `main`)
+- **Auto-deploy:** setiap `git push` → Vercel build otomatis (`vercel.json` mengatur
+  `npm run build`, folder `dist/`, dan semua header keamanan)
 
-## 📝 Yang masih perlu diganti sebelum di-share luas
+## 📄 CV — cara mengganti isi nanti
 
-| Apa | Di mana | Nilai sekarang |
-|---|---|---|
-| CV | `public/assets/cv/cv-raihan.pdf` | halaman placeholder |
+CV dibuat dari konten situs dan disimpan sebagai sumber HTML agar mudah diedit:
 
-> Email, Instagram, kampus, dan angkatan sudah terisi ✓.
+1. Edit `cv-sumber/cv-raihan.html`
+2. Cetak ulang ke PDF (Chrome headless, satu perintah):
+   ```bash
+   google-chrome --headless=new --disable-gpu --no-pdf-header-footer \
+     --print-to-pdf=public/assets/cv/cv-raihan.pdf \
+     "file://$PWD/cv-sumber/cv-raihan.html"
+   ```
+3. Commit & push → situs otomatis ter-update:
+   ```bash
+   git add -A && git commit -m "update CV" && git push
+   ```
+
+> Isi CV mengikuti konten `index.html` — jangan menambah data yang tidak ada
+> di situs (nomor HP, alamat, dsb.) sampai memang mau ditampilkan di situs juga.
+
 > Tip teks: konten Indonesia cukup diedit di `index.html` — `src/lang.js` hanya
 > berisi terjemahan Inggris dan **tidak akan menimpa tulisanmu**.
 
