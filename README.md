@@ -34,9 +34,8 @@ profil-raihan/
 │   │   ├── foto.png    ← foto profil (512×512, dioptimasi)
 │   │   ├── favicon.svg
 │   │   ├── noise.png   ← tekstur noise untuk latar (aset sendiri, alpha rendah)
-│   │   └── cv/cv-raihan.pdf  ← CV (dibuat dari cv-sumber/, lihat bawah)
+│   │   └── cv/cv-raihan.pdf  ← CV asli (ganti file PDF-nya langsung)
 │   └── js/theme.js     ← tema anti-kedip (sinkron di <head>, tidak dibundel)
-├── cv-sumber/            ← sumber CV (HTML) → dicetak ke PDF via Chrome headless
 ├── vercel.json         ← buildCommand + header keamanan (deploy Vercel)
 ├── AGENTS.md           ← panduan konvensi proyek (untuk AI coding agent)
 └── README.md
@@ -66,24 +65,18 @@ npm run preview    # buka http://localhost:4173
 - **Auto-deploy:** setiap `git push` → Vercel build otomatis (`vercel.json` mengatur
   `npm run build`, folder `dist/`, dan semua header keamanan)
 
-## 📄 CV — cara mengganti isi nanti
+## 📄 CV — cara mengganti nanti
 
-CV dibuat dari konten situs dan disimpan sebagai sumber HTML agar mudah diedit:
+CV asli ada di `public/assets/cv/cv-raihan.pdf`. Cara menggantinya:
 
-1. Edit `cv-sumber/cv-raihan.html`
-2. Cetak ulang ke PDF (Chrome headless, satu perintah):
-   ```bash
-   google-chrome --headless=new --disable-gpu --no-pdf-header-footer \
-     --print-to-pdf=public/assets/cv/cv-raihan.pdf \
-     "file://$PWD/cv-sumber/cv-raihan.html"
-   ```
-3. Commit & push → situs otomatis ter-update:
+1. Timpa file itu dengan PDF CV baru (nama tetap `cv-raihan.pdf`)
+2. Commit & push → situs otomatis ter-update:
    ```bash
    git add -A && git commit -m "update CV" && git push
    ```
 
-> Isi CV mengikuti konten `index.html` — jangan menambah data yang tidak ada
-> di situs (nomor HP, alamat, dsb.) sampai memang mau ditampilkan di situs juga.
+> Catatan: CV bisa diunduh siapa pun dari situs — pastikan isinya memang untuk
+> konsumsi publik.
 
 > Tip teks: konten Indonesia cukup diedit di `index.html` — `src/lang.js` hanya
 > berisi terjemahan Inggris dan **tidak akan menimpa tulisanmu**.

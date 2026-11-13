@@ -97,9 +97,10 @@ public/assets/    ← foto, favicon, CV, tekstur noise.png (disalin apa adanya)
   (Vercel membaca `vercel.json`: buildCommand `npm run build`, output `dist/`, header keamanan).
 - `og:url` & `og:image` di `index.html` memakai URL absolut domain live —
   bila domain berubah, ubah keduanya.
-- CV: sumber di `cv-sumber/cv-raihan.html` → cetak ke `public/assets/cv/cv-raihan.pdf`
-  via Chrome headless (perintah ada di komentar file HTML). Isi CV mengikuti konten
-  situs — jangan mengarang data yang tidak ada di `index.html`.
+- CV: file PDF asli di `public/assets/cv/cv-raihan.pdf` — **publik & bisa diunduh
+  siapa pun**. Mengganti = timpa PDF-nya (nama file tetap `cv-raihan.pdf`),
+  lalu commit & push. Pemilik mengelola isi CV-nya sendiri; agen tidak perlu
+  membuat/mengubah isi CV tanpa diminta.
 
 ## Verifikasi
 
